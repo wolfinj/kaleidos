@@ -177,11 +177,18 @@ function countDown() {
       if (time === timeKid && timeKid && sound) soundOwertime.play();
 
       if (time === timeKid) stopAudio(soundClock);
+      if (sound && time === 0) {
+        soundEnd.play();
+        stopAudio(soundClock);
+      }
 
       if (time < 0) {
-        if (sound) soundEnd.play();
-        stopAudio(soundClock);
-        clearInterval(count);
+        // clearInterval(count);
+        reset();
+        showEl(btnStart);
+        showEl(blur);
+        hideEl(controls);
+        hideEl(counter);
         return;
       }
 
