@@ -10,6 +10,8 @@ const inputKid = document.querySelector('#kid');
 const inputTime = document.querySelector('#time');
 
 const counter = document.querySelector('.counter');
+const letterTop = document.querySelector('.letter--top');
+const letterBot = document.querySelector('.letter--bot');
 
 const btnConfig = document.querySelector('.config');
 const btnSubmit = document.querySelector('#submit');
@@ -18,17 +20,60 @@ const btnResume = document.querySelector('.resume');
 const btnReset = document.querySelector('.reset');
 const btnStart = document.querySelector('.start');
 
+const soundStart = new Audio('resources/announcement-sound-4-21464.mp3');
+const soundOwertime = new Audio('resources/ding-ding-sound-effect.mp3');
+const soundEnd = new Audio('resources/glad-piano-logo-13394.mp3');
+const soundClock = new Audio('resources/ticking-clock_1-27477.mp3');
 //////////////////////
 ///// Variables //////
 //////////////////////
 
-let timeBase = 120;
-let timeKid = 60;
+const abcLV = [
+  'A',
+  'Ā',
+  'B',
+  'C',
+  'Č',
+  'D',
+  'E',
+  'Ē',
+  'F',
+  'G',
+  'Ģ',
+  'H',
+  'I',
+  'Ī',
+  'J',
+  'K',
+  'Ķ',
+  'L',
+  'Ļ',
+  'M',
+  'N',
+  'Ņ',
+  'O',
+  'P',
+  'R',
+  'S',
+  'Š',
+  'T',
+  'U',
+  'Ū',
+  'V',
+  'Z',
+  'Ž',
+];
+
+let timeBase = 20;
+let timeKid = 0;
 let time = 0;
 let pause = false;
 let sound = true;
 let alert = true;
 let count;
+
+inputTime.value = timeBase;
+inputKid.value = timeKid;
 
 //////////////////////
 ///// Functions //////
@@ -42,17 +87,32 @@ function decrese(event) {
   event.nextElementSibling.stepDown();
 }
 
-function toggleHide(elem) {
-  elem.classList.toggle('hidden');
+function showEl(elem) {
+  elem.classList.remove('hidden');
+}
+
+function hideEl(elem) {
+  elem.classList.add('hidden');
 }
 function closeCtrl() {
-  blur.classList.add('hidden');
-  controlPanel.classList.add('hidden');
+  if (btnStart.classList.contains('hidden')) {
+    hideEl(blur);
+    showEl(controls);
+    showEl(counter);
+  }
+  hideEl(controlPanel);
+}
+
+function stopAudio(audio) {
+  audio.pause();
+  audio.currentTime = 0;
 }
 
 function openCtrl() {
-  blur.classList.remove('hidden');
-  controlPanel.classList.remove('hidden');
+  showEl(blur);
+  showEl(controlPanel);
+  hideEl(controls);
+  hideEl(counter);
 }
 
 function check(node) {
@@ -70,32 +130,43 @@ function timeFormat(seconds) {
 function reset() {
   time = timeBase + timeKid;
   counter.textContent = timeFormat(time);
-
+  hideEl(letterBot);
+  hideEl(letterTop);
   clearInterval(count);
+  stopAudio(soundClock);
 }
 
 function playPause() {
   if (btnResume.classList.contains('hidden')) {
-    btnResume.classList.remove('hidden');
-    btnPause.classList.add('hidden');
+    showEl(btnResume);
+    hideEl(btnPause);
     pause = true;
+    soundClock.pause();
   } else {
-    btnResume.classList.add('hidden');
-    btnPause.classList.remove('hidden');
+    hideEl(btnResume);
+    showEl(btnPause);
     pause = false;
+    if ((time <= 10 && time > 0) || (time <= timeKid + 10 && time > timeKid))
+      soundClock.play();
   }
-  console.log(pause);
 }
 
 function countDown() {
   count = setInterval(timer, 1000);
-  console.log(counter, time);
   function timer() {
     if (!pause) {
-      //do something if not paused
       time = time - 1;
+      if (time === 11) soundClock.play();
+      if (time === 11 + timeKid && timeKid) soundClock.play();
+      if (time === timeKid && timeKid) soundOwertime.play();
+
+      if (time === timeKid) stopAudio(soundClock);
+
       if (time < 0) {
+        soundEnd.play();
+        stopAudio(soundClock);
         clearInterval(count);
+        console.log(time);
         return;
       }
 
@@ -103,7 +174,11 @@ function countDown() {
     }
   }
 }
-console.log(counter.textContent);
+
+function rngLetter(abc) {
+  return abc[Math.floor(Math.random() * abc.length)];
+}
+
 //////////////////////
 /// Event listeners //
 //////////////////////
@@ -112,10 +187,10 @@ blur.addEventListener('click', closeCtrl);
 btnConfig.addEventListener('click', openCtrl);
 
 btnSubmit.addEventListener('click', (event) => {
-  closeCtrl();
   timeBase = Number.parseInt(inputTime.value);
   timeKid = Number.parseInt(inputKid.value);
 
+  closeCtrl();
   reset();
 });
 
@@ -132,13 +207,30 @@ controls.addEventListener('click', (event) => {
   }
   if (btn?.classList.contains('reset')) {
     reset();
-    toggleHide(btnStart);
+    showEl(btnStart);
+    showEl(blur);
+    hideEl(controls);
+    hideEl(counter);
   }
 });
 
 btnStart.addEventListener('click', (event) => {
-  toggleHide(btnStart);
-
+  hideEl(btnStart);
+  hideEl(blur);
+  showEl(controls);
+  showEl(counter);
   reset();
-  countDown();
+
+  const roundLetter = rngLetter(abcLV);
+
+  letterTop.textContent = roundLetter;
+  letterBot.textContent = roundLetter;
+  showEl(letterTop);
+  showEl(letterBot);
+  letterTop.classList.add('animate--top');
+  letterBot.classList.add('animate--bot');
+
+  soundStart.play();
+
+  setTimeout(countDown, 3000);
 });
