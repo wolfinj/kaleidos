@@ -129,7 +129,6 @@ function check(node) {
   if (node.classList.contains('alert')) {
     node.classList.contains('check--off') ? (alert = false) : (alert = true);
   }
-  console.log(sound, alert);
 }
 
 function timeFormat(seconds) {
