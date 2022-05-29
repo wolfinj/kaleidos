@@ -19,6 +19,8 @@ const btnPause = document.querySelector('.pause');
 const btnResume = document.querySelector('.resume');
 const btnReset = document.querySelector('.reset');
 const btnStart = document.querySelector('.start');
+const btnCheckAlert = document.querySelector('.alert');
+const btnCheckSound = document.querySelector('.sound');
 
 const soundStart = new Audio('resources/announcement-sound-4-21464.mp3');
 const soundOwertime = new Audio('resources/ding-ding-sound-effect.mp3');
@@ -65,7 +67,7 @@ const abcLV = [
 ];
 
 let timeBase = 20;
-let timeKid = 0;
+let timeKid = 13;
 let time = 0;
 let pause = false;
 let sound = true;
@@ -74,6 +76,10 @@ let count;
 
 inputTime.value = timeBase;
 inputKid.value = timeKid;
+if (!alert) btnCheckAlert.classList.add('check--off');
+else btnCheckAlert.classList.remove('check--off');
+if (!sound) btnCheckSound.classList.add('check--off');
+else btnCheckSound.classList.remove('check--off');
 
 //////////////////////
 ///// Functions //////
@@ -117,6 +123,13 @@ function openCtrl() {
 
 function check(node) {
   node.classList.toggle('check--off');
+  if (node.classList.contains('sound')) {
+    node.classList.contains('check--off') ? (sound = false) : (sound = true);
+  }
+  if (node.classList.contains('alert')) {
+    node.classList.contains('check--off') ? (alert = false) : (alert = true);
+  }
+  console.log(sound, alert);
 }
 
 function timeFormat(seconds) {
@@ -146,7 +159,10 @@ function playPause() {
     hideEl(btnResume);
     showEl(btnPause);
     pause = false;
-    if ((time <= 10 && time > 0) || (time <= timeKid + 10 && time > timeKid))
+    if (
+      (time <= 10 && time > 0) ||
+      (time <= timeKid + 10 && time > timeKid && alert)
+    )
       soundClock.play();
   }
 }
@@ -156,17 +172,17 @@ function countDown() {
   function timer() {
     if (!pause) {
       time = time - 1;
-      if (time === 11) soundClock.play();
-      if (time === 11 + timeKid && timeKid) soundClock.play();
-      if (time === timeKid && timeKid) soundOwertime.play();
+      if (((time === 11 + timeKid && timeKid) || time === 11) && alert && sound)
+        soundClock.play();
+      // if (time === 11 + timeKid && timeKid) soundClock.play();
+      if (time === timeKid && timeKid && sound) soundOwertime.play();
 
       if (time === timeKid) stopAudio(soundClock);
 
       if (time < 0) {
-        soundEnd.play();
+        if (sound) soundEnd.play();
         stopAudio(soundClock);
         clearInterval(count);
-        console.log(time);
         return;
       }
 
@@ -230,7 +246,7 @@ btnStart.addEventListener('click', (event) => {
   letterTop.classList.add('animate--top');
   letterBot.classList.add('animate--bot');
 
-  soundStart.play();
+  if (sound) soundStart.play();
 
   setTimeout(countDown, 3000);
 });

@@ -59,7 +59,7 @@ button:hover .icon {
 }
 .container {
   aspect-ratio: 2.45 / 3.5;
-  height: 90vh;
+  height: 85vh;
   background: var(--clr-o4);
   border: 1vh solid var(--clr-main);
   box-shadow: 0 0 1vh 1vh var(--clr-main);
@@ -85,12 +85,21 @@ button:hover .icon {
   top: 0;
   right: 0;
 }
+.letter--top {
+  top: -2vh;
+  left: 2vh;
+}
+.letter--bot {
+  bottom: -2vh;
+  right: 2vh;
 
+  transform: translate(0) scale(100%) rotate(-180deg);
+}
 .letter {
   font-family: var(--font-main);
 
   position: absolute;
-  font-size: 23vh;
+  font-size: 22vh;
   color: var(--clr-o1);
   -webkit-text-stroke: 0.3vh var(--clr-o3);
 }
@@ -173,10 +182,11 @@ button:hover .icon {
   font-family: var(--font-main);
   font-size: 16vh;
   letter-spacing: -1.5vh;
+  color: var(--clr-o3);
 }
 .start:hover {
-  background: var(--clr-main);
-  color: var(--clr-o2);
+  /* background: var(--clr-o2); */
+  color: var(--clr-o4);
 }
 
 .control-panel {
@@ -266,8 +276,9 @@ input[type='number'] {
   height: 23vh;
 }
 .spade path {
-  stroke: var(--clr-o1);
-  fill: var(--clr-o3);
+  stroke: var(--clr-o3);
+  fill: var(--clr-o2);
+  stroke-width: 1vh;
 }
 
 .flex {
