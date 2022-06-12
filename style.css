@@ -221,7 +221,7 @@ button:hover .icon {
   .blur {
     background-color: var(--clr-blur);
     backdrop-filter: blur(2px);
-    width: 100vh;
+    width: 100vw;
     height: 100vh;
   }
 }
