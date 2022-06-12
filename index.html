@@ -325,5 +325,14 @@
         <button id="submit">OK</button>
       </div>
     </div>
+    <script>
+      function increse(event) {
+        event.previousElementSibling.stepUp();
+      }
+
+      function decrese(event) {
+        event.nextElementSibling.stepDown();
+      }
+    </script>
   </body>
 </html>

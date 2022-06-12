@@ -85,14 +85,6 @@ else btnCheckSound.classList.remove('check--off');
 ///// Functions //////
 //////////////////////
 
-function increse(event) {
-  event.previousElementSibling.stepUp();
-}
-
-function decrese(event) {
-  event.nextElementSibling.stepDown();
-}
-
 function showEl(elem) {
   elem.classList.remove('hidden');
 }
