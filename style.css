@@ -75,6 +75,7 @@ button:hover .icon {
   display: grid;
   grid-template-columns: 1fr 1fr 5vh 1fr 1fr;
   margin-top: 8vh;
+  margin-left: -2vh;
   text-align: center;
   width: 95%;
   font-size: 19vh;
