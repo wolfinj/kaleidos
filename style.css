@@ -27,8 +27,8 @@
   --font-f15: 'Tourney', cursive;
   --font-f16: 'Unica One', cursive;
 
-  --font-clock: var(--font-f1);
-  --font-main: var(--font-f1);
+  --font-clock: var(--font-f04);
+  --font-main: var(--font-f04);
 }
 * {
   margin: 0;
@@ -72,12 +72,20 @@ button:hover .icon {
 }
 
 .counter {
-  font-size: 25vh;
-  justify-self: center;
+  display: grid;
+  grid-template-columns: 1fr 1fr 5vh 1fr 1fr;
+  margin-top: 8vh;
+  text-align: center;
+  width: 95%;
+  font-size: 19vh;
+  justify-content: space-around;
   letter-spacing: -2vh;
   font-family: var(--font-clock);
   color: var(--clr-o1);
   -webkit-text-stroke: 0.3vh var(--clr-o3);
+}
+.counter div:nth-child(3) {
+  transform: translateY(-13%);
 }
 
 .config {
@@ -180,13 +188,17 @@ button:hover .icon {
 
 .start {
   font-family: var(--font-main);
-  font-size: 16vh;
-  letter-spacing: -1.5vh;
+  font-size: 13vh;
+  letter-spacing: -1vh;
   color: var(--clr-o3);
 }
 .start:hover {
   /* background: var(--clr-o2); */
   color: var(--clr-o4);
+}
+
+.controls {
+  margin-top: -5vh;
 }
 
 .control-panel {
@@ -200,10 +212,12 @@ button:hover .icon {
   position: absolute;
   border-radius: 2vh;
 }
-@supports ((backdrop-filter: blur(18px))) {
+@supports ((backdrop-filter: blur(2px))) {
   .blur {
     background-color: var(--clr-blur);
-    backdrop-filter: blur(18px);
+    backdrop-filter: blur(2px);
+    width: 100vh;
+    height: 100vh;
   }
 }
 #submit {

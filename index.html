@@ -142,7 +142,7 @@
       <button class="start">START</button>
       <!-- <div class="letter letter--front">K</div> -->
       <div class="control-panel hidden">
-        <div class="cfg-items">
+        <div class="cfg-items time">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             class="cfg-icon"
@@ -158,7 +158,7 @@
             />
           </svg>
           <div class="flex">
-            <button onclick="decrese(this)">
+            <button class="decrese-count">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 class="cfg-nr"
@@ -183,7 +183,7 @@
               class="input"
               id="time"
             />
-            <button onclick="increse(this)">
+            <button class="increse-count">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 class="cfg-nr"
@@ -201,7 +201,7 @@
             </button>
           </div>
         </div>
-        <div class="cfg-items">
+        <div class="cfg-items kid">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             class="cfg-icon"
@@ -217,7 +217,7 @@
             />
           </svg>
           <div class="flex">
-            <button onclick="decrese(this)">
+            <button class="decrese-count">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 class="cfg-nr"
@@ -242,7 +242,7 @@
               class="input"
               id="kid"
             />
-            <button onclick="increse(this)">
+            <button class="increse-count">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 class="cfg-nr"
@@ -276,7 +276,6 @@
             />
           </svg>
           <svg
-            onclick="check(this)"
             xmlns="http://www.w3.org/2000/svg"
             class="cfg-icon check sound"
             fill="none"
@@ -307,7 +306,6 @@
             />
           </svg>
           <svg
-            onclick="check(this)"
             xmlns="http://www.w3.org/2000/svg"
             class="cfg-icon check alert check--off"
             fill="none"
@@ -325,14 +323,29 @@
         <button id="submit">OK</button>
       </div>
     </div>
-    <script>
-      function increse(event) {
-        event.previousElementSibling.stepUp();
-      }
 
-      function decrese(event) {
-        event.nextElementSibling.stepDown();
-      }
+    <script>
+      // function increse(event) {
+      //   event.previousElementSibling.stepUp();
+      // }
+
+      // function decrese(event) {
+      //   event.nextElementSibling.stepDown();
+      // }
+
+      // function check(node) {
+      //   node.classList.toggle('check--off');
+      //   if (node.classList.contains('sound')) {
+      //     node.classList.contains('check--off')
+      //       ? (sound = false)
+      //       : (sound = true);
+      //   }
+      //   if (node.classList.contains('alert')) {
+      //     node.classList.contains('check--off')
+      //       ? (alert = false)
+      //       : (alert = true);
+      //   }
+      // }
     </script>
   </body>
 </html>

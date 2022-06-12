@@ -66,8 +66,8 @@ const abcLV = [
   'Ž',
 ];
 
-let timeBase = 20;
-let timeKid = 13;
+let timeBase = 120;
+let timeKid = 0;
 let time = 0;
 let pause = false;
 let sound = true;
@@ -113,16 +113,6 @@ function openCtrl() {
   hideEl(counter);
 }
 
-function check(node) {
-  node.classList.toggle('check--off');
-  if (node.classList.contains('sound')) {
-    node.classList.contains('check--off') ? (sound = false) : (sound = true);
-  }
-  if (node.classList.contains('alert')) {
-    node.classList.contains('check--off') ? (alert = false) : (alert = true);
-  }
-}
-
 function timeFormat(seconds) {
   const min = Math.trunc(seconds / 60).toString();
   const sec = (seconds % 60).toString();
@@ -131,9 +121,19 @@ function timeFormat(seconds) {
   }`;
 }
 
+function timeDiv(timeString) {
+  return `
+  <div>${timeString[0]}</div>
+  <div>${timeString[1]}</div>
+  <div>${timeString[2]}</div>
+  <div>${timeString[3]}</div>
+  <div>${timeString[4]}</div>
+  `;
+}
+
 function reset() {
   time = timeBase + timeKid;
-  counter.textContent = timeFormat(time);
+  counter.innerHTML = timeDiv(timeFormat(time));
   hideEl(letterBot);
   hideEl(letterTop);
   clearInterval(count);
@@ -184,7 +184,7 @@ function countDown() {
         return;
       }
 
-      counter.textContent = timeFormat(time);
+      counter.innerHTML = timeDiv(timeFormat(time));
     }
   }
 }
@@ -200,12 +200,44 @@ function rngLetter(abc) {
 blur.addEventListener('click', closeCtrl);
 btnConfig.addEventListener('click', openCtrl);
 
-btnSubmit.addEventListener('click', (event) => {
-  timeBase = Number.parseInt(inputTime.value);
-  timeKid = Number.parseInt(inputKid.value);
+controlPanel.addEventListener('click', (e) => {
+  if (e.target.closest('button')?.classList.contains('decrese-count')) {
+    if (e.target.closest('.time')) inputTime.stepDown();
+    if (e.target.closest('.kid')) inputKid.stepDown();
+    return;
+  }
+  if (e.target.closest('button')?.classList.contains('increse-count')) {
+    if (e.target.closest('.time')) inputTime.stepUp();
+    if (e.target.closest('.kid')) inputKid.stepUp();
+    return;
+  }
 
-  closeCtrl();
-  reset();
+  if (e.target.closest('svg')?.classList.contains('check')) {
+    e.target.closest('svg').classList.toggle('check--off');
+    if (e.target.closest('svg').classList.contains('sound')) {
+      e.target.closest('svg').classList.contains('check--off')
+        ? (sound = false)
+        : (sound = true);
+    }
+    if (e.target.closest('svg').classList.contains('alert')) {
+      e.target.closest('svg').classList.contains('check--off')
+        ? (alert = false)
+        : (alert = true);
+    }
+    return;
+  }
+  console.log(e.target.id);
+  if (e.target.id === 'submit') {
+    timeBase = Number.parseInt(inputTime.value);
+    timeKid = Number.parseInt(inputKid.value);
+
+    closeCtrl();
+    reset();
+    showEl(btnStart);
+    showEl(blur);
+    hideEl(controls);
+    hideEl(counter);
+  }
 });
 
 controls.addEventListener('click', (event) => {
