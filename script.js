@@ -66,6 +66,8 @@ const abcLV = [
   'Ž',
 ];
 
+const diacritic = ['Ā', 'Č', 'Ē', 'Ī', 'Š', 'Ū', 'Ž'];
+
 let timeBase = 120;
 let timeKid = 0;
 let time = 0;
@@ -190,6 +192,7 @@ function countDown() {
 }
 
 function rngLetter(abc) {
+  // return abc[14];
   return abc[Math.floor(Math.random() * abc.length)];
 }
 
@@ -226,7 +229,6 @@ controlPanel.addEventListener('click', (e) => {
     }
     return;
   }
-  console.log(e.target.id);
   if (e.target.id === 'submit') {
     timeBase = Number.parseInt(inputTime.value);
     timeKid = Number.parseInt(inputKid.value);
@@ -268,6 +270,15 @@ btnStart.addEventListener('click', (event) => {
   reset();
 
   const roundLetter = rngLetter(abcLV);
+
+  letterBot.classList.remove('diacritic');
+  letterTop.classList.remove('diacritic');
+
+  if (diacritic.includes(roundLetter)) {
+    console.log(roundLetter);
+    letterBot.classList.add('diacritic');
+    letterTop.classList.add('diacritic');
+  }
 
   letterTop.textContent = roundLetter;
   letterBot.textContent = roundLetter;

@@ -30,11 +30,13 @@
   --font-clock: var(--font-f04);
   --font-main: var(--font-f04);
 }
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
+
 body {
   display: flex;
   align-items: center;
@@ -50,19 +52,20 @@ body {
   margin: 1vh;
   stroke: var(--clr-o3);
 }
+
 button {
   border: none;
   background: none;
 }
+
 button:hover .icon {
   stroke: var(--clr-o1);
 }
+
 .container {
   aspect-ratio: 2.45 / 3.5;
   height: 85vh;
   background: var(--clr-o4);
-  /* border: 0.6vh solid var(--clr-o2); */
-
   box-shadow: 0 0 1vh 1vh var(--clr-main), inset 0 0 2vh 0.2vh var(--clr-white);
   border-radius: 3vh;
   display: flex;
@@ -86,6 +89,7 @@ button:hover .icon {
   color: var(--clr-o1);
   -webkit-text-stroke: 0.3vh var(--clr-o3);
 }
+
 .counter div:nth-child(3) {
   transform: translateY(-13%);
 }
@@ -95,19 +99,29 @@ button:hover .icon {
   top: 0;
   right: 0;
 }
+
 .letter--top {
   top: -2vh;
   left: 2vh;
 }
+
 .letter--bot {
   bottom: -2vh;
   right: 2vh;
-
   transform: translate(0) scale(100%) rotate(-180deg);
 }
+
+.diacritic.letter--top {
+  top: 2vh;
+}
+
+.diacritic.letter--bot {
+  bottom: 2vh;
+}
+
 .letter {
   font-family: var(--font-main);
-
+  text-align: center;
   position: absolute;
   font-size: 22vh;
   color: var(--clr-o1);
@@ -116,13 +130,18 @@ button:hover .icon {
 
 .animate--top {
   animation: 4s top-anim ease forwards;
-  transform: translate(-50%, -50%) scale(0);
-  font-size: 50vh;
+  top: -2vh;
+  left: 2vh;
+  transform: translate(0) scale(100%);
+  font-size: 23vh;
 }
+
 .animate--bot {
   animation: 4s bot-anim ease forwards;
-  transform: translate(-50%, -50%) scale(0);
-  font-size: 50vh;
+  bottom: -2vh;
+  right: 2vh;
+  transform: translate(0) scale(100%) rotate(-180deg);
+  font-size: 23vh;
 }
 
 @keyframes top-anim {
@@ -133,7 +152,9 @@ button:hover .icon {
     border: var(--clr-o1) solid 1vh;
     padding: 3vh;
     border-radius: 3vh;
+    transform: translate(-50%, -50%) scale(0);
   }
+
   50% {
     transform: translate(-50%, -50%) scale(100%);
     font-size: 50vh;
@@ -144,18 +165,16 @@ button:hover .icon {
     padding: 3vh;
     border-radius: 3vh;
   }
-  100% {
-    top: -2vh;
-    left: 2vh;
-    transform: translate(0) scale(100%);
-    font-size: 23vh;
-  }
 }
+
 @keyframes bot-anim {
   0% {
     top: 50%;
     left: 50%;
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0);
   }
+
   50% {
     transform: translate(-50%, -50%) scale(100%);
     font-size: 50vh;
@@ -163,17 +182,12 @@ button:hover .icon {
     left: 50%;
     opacity: 0;
   }
+
   70% {
     opacity: 0;
   }
-  100% {
-    bottom: -2vh;
-    right: 2vh;
-
-    transform: translate(0) scale(100%) rotate(-180deg);
-    font-size: 23vh;
-  }
 }
+
 .start,
 .control-panel {
   position: absolute;
@@ -193,13 +207,18 @@ button:hover .icon {
   font-size: 13vh;
   letter-spacing: -1vh;
   color: var(--clr-o3);
+  -webkit-text-stroke: 0.2vh var(--clr-o4);
 }
+
 .start span {
   margin-left: -1.5vh;
 }
-.start:hover {
-  /* background: var(--clr-o2); */
+
+.start:hover,
+.start:active {
   color: var(--clr-o4);
+  /* background-color: var(--clr-o2); */
+  -webkit-text-stroke: 0.2vh var(--clr-o4);
 }
 
 .controls {
