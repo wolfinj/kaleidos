@@ -30,7 +30,7 @@ const soundClock = new Audio('resources/ticking-clock_1-27477.mp3');
 ///// Variables //////
 //////////////////////
 
-const abcLV = [
+const abcLvSeed = [
   'A',
   'Ā',
   'B',
@@ -66,6 +66,8 @@ const abcLV = [
   'Ž',
 ];
 
+let abcLV = [...abcLvSeed]
+
 const diacritic = ['Ā', 'Č', 'Ē', 'Ī', 'Š', 'Ū', 'Ž'];
 
 let timeBase = 120;
@@ -94,6 +96,7 @@ function showEl(elem) {
 function hideEl(elem) {
   elem.classList.add('hidden');
 }
+
 function closeCtrl() {
   if (btnStart.classList.contains('hidden')) {
     hideEl(blur);
@@ -193,7 +196,14 @@ function countDown() {
 
 function rngLetter(abc) {
   // return abc[14];
-  return abc[Math.floor(Math.random() * abc.length)];
+  if(abc.length <= 0){
+    abc = abcLvSeed
+  }
+
+  const index = Math.floor(Math.random() * abc.length);
+  const letter = abc[index];
+  abc.splice(index,1);
+  return letter
 }
 
 //////////////////////
@@ -275,7 +285,6 @@ btnStart.addEventListener('click', (event) => {
   letterTop.classList.remove('diacritic');
 
   if (diacritic.includes(roundLetter)) {
-    console.log(roundLetter);
     letterBot.classList.add('diacritic');
     letterTop.classList.add('diacritic');
   }
